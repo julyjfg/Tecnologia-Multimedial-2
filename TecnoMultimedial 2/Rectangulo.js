@@ -11,4 +11,10 @@ class Rectangulo{
             punto.y>=this.y-this.alto &&
             punto.y<=this.y+this.alto)
     }
+    seCruza(rango){
+        return !(rango.x - rango.ancho > this.x + this.ancho ||
+            rango.x + rango.ancho < this.x - this.ancho ||
+            rango.y - rango.alto > this.y + this.alto ||
+            rango.y + rango.alto < this.y - this.alto);
+    }
 }

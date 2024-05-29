@@ -46,28 +46,6 @@ class Quadtree{
         }
 
     }
-
-    actualizar(){
-        let todosPuntos = this._extraerPuntos();
-        this.puntos = [];
-        this.dividir = false;
-    
-        for (let punto of todosPuntos){ 
-          this.insertar(punto);
-        }
-    }
-    
-      _extraerPuntos() {
-        let puntos = [...this.puntos];
-        if (this.dividir) {
-          puntos = puntos.concat(this.noreste._extraerPuntos());
-          puntos = puntos.concat(this.noroeste._extraerPuntos());
-          puntos = puntos.concat(this.sureste._extraerPuntos());
-          puntos = puntos.concat(this.suroeste._extraerPuntos());
-        }
-        return puntos;
-      }
-
       consulta(rango,encotro){
         if(!encotro){
             encotro=[];
@@ -77,9 +55,7 @@ class Quadtree{
         } else {
             for(let p of this.puntos){
                 if(rango.contiene(p)){
-                    //encotro.push(p);
-                    p.moverEnX();
-                    p.moverEnY();
+                    p.moverEnX()
                 }
             }
         }

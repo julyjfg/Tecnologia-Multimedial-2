@@ -1,4 +1,5 @@
 let quadTree;
+let okEncotro=false;
 function setup() {
   createCanvas(400, 400);
 
@@ -15,9 +16,6 @@ function setup() {
 
 function draw() {
   background(150);
-
-  quadTree.actualizar();
-  
   quadTree.mostrar();
 
   stroke(0,255,0);
