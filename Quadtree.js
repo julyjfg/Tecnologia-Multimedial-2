@@ -77,7 +77,7 @@ class Quadtree{
     mostrar() {
         push();
         colorMode(HSB, 360, 100, 100); 
-        this.pintar();
+        this.pintar(this.puntos);
         rectMode(CENTER);
         rect(this.limite.x, this.limite.y, this.limite.ancho * 2, this.limite.alto * 2);
         pop();
