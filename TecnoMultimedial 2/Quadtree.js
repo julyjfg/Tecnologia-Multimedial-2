@@ -5,22 +5,21 @@ class Quadtree{
         this.puntos=[];
         this.dividir= false;
     }
-    subdividir(){
-        let x=this.limite.x;
-        let y= this.limite.y;
-        let w= this.limite.ancho;
-        let h=this.limite.alto;
+    subdividir() {
+        let x = this.limite.x;
+        let y = this.limite.y;
+        let w = this.limite.ancho;
+        let h = this.limite.alto;
 
-
-       let ne= new Rectangulo(x + w/2, y - h/2, w/2, h/2);
-       this.noreste= new Quadtree(ne,this.capacidad);
-       let nw= new Rectangulo(x - w/2, y - h/2, w/2, h/2);
-       this.noroeste= new Quadtree(nw,this.capacidad);
-       let se= new Rectangulo(x + w/2, y + h/2, w/2, h/2);
-       this.sureste= new Quadtree(se,this.capacidad);
-       let sw= new Rectangulo(x - w/2, y + h/2, w/2, h/2);
-       this.suroeste= new Quadtree(sw,this.capacidad);
-       this.dividir=true; 
+        let ne = new Rectangulo(x + w / 2, y - h / 2, w / 2, h / 2);
+        this.noreste = new Quadtree(ne, this.capacidad);
+        let nw = new Rectangulo(x - w / 2, y - h / 2, w / 2, h / 2);
+        this.noroeste = new Quadtree(nw, this.capacidad);
+        let se = new Rectangulo(x + w / 2, y + h / 2, w / 2, h / 2);
+        this.sureste = new Quadtree(se, this.capacidad);
+        let sw = new Rectangulo(x - w / 2, y + h / 2, w / 2, h / 2);
+        this.suroeste = new Quadtree(sw, this.capacidad);
+        this.dividir = true;
     }
     insertar(punto){
         if(!this.limite.contiene(punto)){
@@ -67,46 +66,31 @@ class Quadtree{
         }
         return puntos;
       }
+      pintar() {
 
-      consulta(rango,encotro){
-        if(!encotro){
-            encotro=[];
-        }
-        if(!this.limite.seCruza(rango)){
-            return;//arreglo vacio.
-        } else {
-            for(let p of this.puntos){
-                if(rango.contiene(p)){
-                    //encotro.push(p);
-                    p.moverEnX();
-                    p.moverEnY();
-                }
-            }
-        }
-        if(this.dividir){
-          this.noroeste.consulta(rango,encotro);
-           this.noreste.consulta(rango,encotro);
-           this.suroeste.consulta(rango,encotro);
-           this.sureste.consulta(rango,encotro);
-        }
-        return encotro;
+        let h = map(mouseX, 0, width, 0, 360);
+        let s = map(mouseY, 0, height, 0, 100);
+        let b = map(mouseX + mouseY, 0, width + height, 0, 100);
+        fill(h, s, b);
     }
-    mostrar(){
-        stroke(225);
-        strokeWeight(1);
-        noFill();
+
+    mostrar() {
+        push();
+        colorMode(HSB, 360, 100, 100); 
+        this.pintar();
         rectMode(CENTER);
-        rect(this.limite.x,this.limite.y,this.limite.ancho*2,this.limite.alto*2);
-        if(this.dividir){
+        rect(this.limite.x, this.limite.y, this.limite.ancho * 2, this.limite.alto * 2);
+        pop();
+        if (this.dividir) {
             this.noreste.mostrar();
             this.noroeste.mostrar();
             this.sureste.mostrar();
             this.suroeste.mostrar();
         }
-        for (let p of this.puntos){
-            strokeWeight(4);
-            point(p.x,p.y);
-        }
-
     }
+
+     mousePressed(){
+        this.puntos.slice();
+    }
+
 }

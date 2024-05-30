@@ -1,39 +1,41 @@
 let quadTree;
+let puntos=[];
 function setup() {
   createCanvas(400, 400);
 
-  let limite = new Rectangulo(200,200,200,200);
+  let limite = new Rectangulo(200,200,200,height);
   quadTree = new Quadtree(limite,4);
+  colores=new Colores();
   console.log(quadTree);
 
-  for (let i=0; i<300;i++){
-    let p = new Punto(random(width), random(height));
-    quadTree.insertar(p);
+  for (let i=0; i<200;i++){
+    puntos.push( new Punto(random(width), random(height)));
+    quadTree.insertar(puntos[i]);
   }
 
 }
 
 function draw() {
-  background(150);
+  background(255);
 
   quadTree.actualizar();
   
   quadTree.mostrar();
 
-  stroke(0,255,0);
-  rectMode(CENTER);
-  let rango= new Rectangulo(mouseX,mouseY,25,25);
-
-  if(mouseX<width && mouseY<height){
-    rect(rango.x,rango.y,rango.ancho*2,rango.alto*2);
-    let puntos=quadTree.consulta(rango);/* let puntos=[]
-                                          quadTree.consulta(rango,puntos);*/ 
-    for(let p of puntos){
-      strokeWeight(4);
-      point(p.x,p.y);
-    }
-    
-  }
-  
 }
 
+function mouseMoved(){
+  for(let p of puntos){
+    p.mover();
+  }
+  //quadTree.mouseMoved();
+}
+function mousePressed(){
+  puntos.splice();
+  quadTree.mousePressed();
+  for (let i=0; i<200;i++){
+    puntos.push( new Punto(random(width), random(height)));
+    quadTree.insertar(puntos[i]);
+  }
+  quadTree.mostrar();
+}
